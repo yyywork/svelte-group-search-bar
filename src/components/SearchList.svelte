@@ -34,7 +34,7 @@
         // find where to get grouping prop
         let onlyCurrentType = extractDeepestbyIndex(gval.prop.split('.'),val);
         if(onlyCurrentType && onlyCurrentType === gval.value){
-          // find where to get display prop
+          // find where to get value prop
           let onlyCurrentDisplayVal = extractDeepestbyIndex(gval.displayProp.split('.'),val);
   
           if(onlyCurrentDisplayVal){

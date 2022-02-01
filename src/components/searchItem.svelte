@@ -12,6 +12,7 @@ function selectFromList(val){
 		});
   }
 
+  //highlight matched words
   function makeTextBolder(text){
     let splitedText = text.split(' ')
     splitedText.map((textVal,index2)=>{

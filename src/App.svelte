@@ -2,13 +2,13 @@
 	import { onMount } from 'svelte';
 	import SearchList from './components/SearchList.svelte';
 	import { apiComposer } from './apis/api.js';
-  // import { env } from './lib/env.js'
 
 	export let queryKeyword = "";
 	const apiInterval = 100;
 	let enableAPI = true;
 	let isShow = false;
 	let queryList;
+	// determine what data is useful from api response, prop and displayProp allow nested object e.g. 'data.user.name'
 	const groupList = [
 		{prop: "Type", value: "movie", maxCount: 3, displayName: "Movies", displayProp: "Title"},
 		{prop: "Type", value: "series", maxCount: 3, displayName: "TV Shows", displayProp: "Title"}
@@ -18,7 +18,7 @@
 
 	async function callingAPI(){
 		if(queryKeyword && enableAPI){
-			resetquerList();
+			resetqueryList();
 			enableAPI = false;
 			const response = await fetch(apiComposer(queryKeyword))
     	const resJson =  await response.json();
@@ -34,7 +34,7 @@
 		}
 	}
 	
-	function resetquerList(){
+	function resetqueryList(){
 		queryList = {
 			currentKey: null,
 			list: []
@@ -46,12 +46,12 @@
 	}
 	
 	onMount(() => {
-		resetquerList()
+		resetqueryList()
 	});
 </script>
 <div id="searchContainer">
-	<input type="text" on:blur={()=>{isShow = false}} name="searchBar" id="searchBar" class:emptyItem={((!queryList?.list) || queryList.list.length<=0) && !isShow} bind:value={queryKeyword} />
-	<SearchList on:selectFromList={selectFromList} isShow={isShow} queryList={queryList} queryKeyword={queryKeyword} groupList={groupList} />
+	<input type="text" name="searchBar" id="searchBar" class:emptyItem={((!queryList?.list) || queryList.list.length<=0) && !isShow} bind:value={queryKeyword} />
+	<SearchList on:selectFromList={selectFromList} bind:isShow={isShow} queryList={queryList} queryKeyword={queryKeyword} groupList={groupList} />
 </div>
 
 <style>

@@ -9,8 +9,9 @@
   
 	const dispatch = createEventDispatcher();
   let extractedList = []
-  export let isShow = false;
+  export let isShow;
     
+  //read and re-create the selection list
  $: initList(queryList);
 
   function initList(queryList){
@@ -26,6 +27,7 @@
     }
   }
 
+  // extract needed data from api response according to the group list setting
   function extractList(){
     groupList.map((gval, ind)=>{
       queryList?.list.map((val, ind)=>{
@@ -52,7 +54,8 @@
       })
     })
   }
-    
+  
+//return selected item
 function selectFromList(val){
 		dispatch('selectFromList', {
       value: val.detail.value
@@ -67,7 +70,6 @@ function selectFromList(val){
         <div class="dataGroup">{displayValue}</div>
         {#each extractedList[displayValue] as value, index}
           <SearchItem on:selectFromList={selectFromList} value={value} queryKeyword={queryKeyword} />
-          <!-- <div on:click={selectFromList(value)} class="dataValue">{@html makeTextBolder(value)}</div> -->
         {/each}
       {/each}
     </div>

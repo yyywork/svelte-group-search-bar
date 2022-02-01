@@ -1,5 +1,7 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
+  import { equalIgnoreCase } from './utils'
+
 
 	const dispatch = createEventDispatcher();
 
@@ -12,26 +14,33 @@ function selectFromList(val){
 		});
   }
 
-  //highlight matched words
+  // highlight match words even it is not consecutive
   function makeTextBolder(text){
     let splitedText = text.split(' ')
+    // split movie/TV show title from API
     splitedText.map((textVal,index2)=>{
       let shouldSkip = false
-      const tempText =  queryKeyword.split(' ').map((value,index)=>{
-        let position = textVal.toUpperCase().search(value.toUpperCase());
+      // split query string from user input
+      queryKeyword.split(' ').map((value,index)=>{
+        let position = equalIgnoreCase(textVal, value);
+        // position < 0 means current title does not match current query
         if(position<0 || shouldSkip){
           return textVal
         }
+        // highlight the text when it is partially/fully match 
         const newString = textVal.substr(0, position) + 
           "<span class='needBold'>" + textVal.slice(position, position + value.length) + 
           "</span>" + textVal.substr((position) + value.length)
         splitedText[index2] = newString
+        // skip checking current title if it highlights once
         shouldSkip = true
       })
     })
     splitedText = splitedText.join(' ')
     return splitedText
   }
+
+
 </script>
 <div on:click={selectFromList(value)} class="dataValue">{@html makeTextBolder(value)}</div> 
 <style>

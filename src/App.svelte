@@ -69,6 +69,6 @@
 		margin-bottom: 0px;
 		border-bottom-right-radius: 0;
 		border-bottom-left-radius: 0;
-		border: 1px solid gray;
+		border: 1px solid lightgray;
 	}
 </style>

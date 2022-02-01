@@ -12,3 +12,6 @@ export function extractDeepestbyIndex(nestedGroup, val){
   return tempVal;
 }
   
+export function equalIgnoreCase(v1, v2){
+  return v1.toUpperCase().search(v2.toUpperCase());
+}
